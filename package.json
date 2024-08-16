@@ -1,0 +1,21 @@
+{
+  "name": "bienes-raices",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Cristian Sena",
+  "license": "ISC",
+  "description": "Portal de bienes raices",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
