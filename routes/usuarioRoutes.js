@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.get("/login", formularioLogin);
-router.get("/register", formularioReistro);
+router.get("/registro", formularioReistro);
 router.get("/olvide-password", formularioOlvidePassword);
 
 
