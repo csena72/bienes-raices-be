@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator';
+import { generarId } from '../helpers/tokens.js';
 import Usuario from '../models/Usuario.js';
 
 
@@ -42,8 +43,16 @@ const registrarUsuario = async(req, res) => {
         });
     }
 
-    const usuario = await Usuario.create(req.body);
-    res.json(usuario);
+    const usuario = await Usuario.create({
+        nombre: req.body.nombre,
+        email: req.body.email,
+        password: req.body.password,
+        token: generarId(),
+    });
+    res.render('templates/mensaje', {
+        pagina: 'Cuenta Creada Correctamente',
+        mensaje: 'Revisa tu email para confirmar tu cuenta',
+    });
 }
 
 const formularioOlvidePassword = (req, res) => {
