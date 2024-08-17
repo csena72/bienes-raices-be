@@ -16,9 +16,6 @@ const formularioReistro = (req, res) => {
 
 const registrarUsuario = async(req, res) => {
 
-    console.log(req.body);
-
-
     await check('nombre').not().isEmpty().withMessage('El nombre es obligatorio').run(req);
     await check('email').isEmail().withMessage('El email es obligatorio').run(req);
     await check('password').not().isEmpty().isLength({ min: 6 }).withMessage('La contraseña es obligatoria debe tener 6 caracteres mínimo.').run(req);
