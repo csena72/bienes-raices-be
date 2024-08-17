@@ -6,8 +6,11 @@ import db from './config/db.js';
 const app = express();
 const PORT = 3000;
 
+app.use(express.urlencoded({ extended: true }));
+
 try {
     await db.authenticate();
+    db.sync();
     console.log('Connection DB has been established successfully.');
 } catch (error) {
     console.log(error);
