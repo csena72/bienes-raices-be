@@ -1,22 +1,19 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '.env' });
 
 
-export const emailRegistro = async (nombre, email, token) => {
+export const emailRegistro = async ({nombre, email, token}) => {
 
     const transport = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: process.env.MAIL_PORT,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
     const info = await transport.sendMail({
-        from: 'Aplicacion Node.js',
+        from: 'BienesRaices.com',
         to: email,
         subject: 'Comprueba tu cuenta en bienesraices.com',
         text: 'Comprueba tu cuenta en bienesraices.com',
