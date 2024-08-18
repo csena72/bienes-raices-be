@@ -13,6 +13,7 @@ const formularioLogin = (req, res) => {
 const formularioReistro = (req, res) => {
     res.render('auth/registro', {
         pagina: 'Crear Cuenta',
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -28,6 +29,7 @@ const registrarUsuario = async(req, res) => {
     if (!resultado.isEmpty()) {
         return res.render('auth/registro', {
             pagina: 'Crear Cuenta',
+            csrfToken: req.csrfToken(),
             errores: resultado.array(),
             usuario: req.body
         });
@@ -37,6 +39,7 @@ const registrarUsuario = async(req, res) => {
     if (existeUsuario) {
         return res.render('auth/registro', {
             pagina: 'Crear Cuenta',
+            csrfToken: req.csrfToken(),
             errores: [{
                 msg: 'El usuario ya existe'
             }],
@@ -63,6 +66,25 @@ const registrarUsuario = async(req, res) => {
     });
 }
 
+const confirmarCuenta = async(req, res) => {
+    const usuario = await Usuario.findOne({ where: { token: req.params.token } });
+    if (!usuario) {
+        return res.render('auth/confirmar-cuenta', {
+            pagina: 'Error al confirmar la cuenta',
+            mensaje: 'Error al confirmar la cuenta, intenta de nuevo',
+            error: true
+        });
+    }
+    usuario.token = null;
+    usuario.confirmado = true;
+    await usuario.save();
+    res.render('auth/confirmar-cuenta', {
+        pagina: 'Cuenta Confirmada',
+        mensaje: 'Cuenta Creada Correctamente',
+        error: false
+    });
+}
+
 const formularioOlvidePassword = (req, res) => {
     res.render('auth/olvide-password', {
         pagina: 'Recuperar tu Cuenta',
@@ -73,5 +95,6 @@ export {
     formularioLogin,
     formularioReistro,
     registrarUsuario,
+    confirmarCuenta,
     formularioOlvidePassword,
 }

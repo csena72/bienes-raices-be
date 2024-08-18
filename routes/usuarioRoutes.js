@@ -3,6 +3,7 @@ import {
     formularioLogin,
     formularioReistro,
     registrarUsuario,
+    confirmarCuenta,
     formularioOlvidePassword
 } from '../controllers/usuarioController.js';
 
@@ -14,13 +15,8 @@ router.get("/login", formularioLogin);
 
 router.get("/registro", formularioReistro);
 router.post("/registro", registrarUsuario);
-
+router.get("/confirmar-cuenta/:token", confirmarCuenta);
 router.get("/olvide-password", formularioOlvidePassword);
-
-
-
-
-
 
 
 export default router;

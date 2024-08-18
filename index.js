@@ -1,12 +1,17 @@
 import  express  from 'express';
+import csrf from 'csurf';
+import cookieParser from 'cookie-parser';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import db from './config/db.js';
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
 
 try {
     await db.authenticate();

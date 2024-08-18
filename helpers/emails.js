@@ -21,7 +21,7 @@ export const emailRegistro = async ({nombre, email, token}) => {
             <p>Hola: ${nombre}, comprueba tu cuenta en bienesraices.com.</p>
             <p>Tu cuenta ya esta lista, solo debes comprobarla en el siguiente enlace: </p>
 
-            <a href="${process.env.FRONTEND_URL}/confirmar/${token}">Comprobar Cuenta</a>
+            <a href="${process.env.FRONTEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar-cuenta/${token}">Comprobar Cuenta</a>
 
             <p>Si tu no creaste esta cuenta, puedes ignorar este mensaje</p>
         `
