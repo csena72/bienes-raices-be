@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/login", formularioLogin);
 
-router.get("/registro", formularioReistro);
+router.get("/registro", formularioRegistro);
 router.post("/registro", registrarUsuario);
 router.get("/confirmar-cuenta/:token", confirmarCuenta);
 router.get("/olvide-password", formularioOlvidePassword);

@@ -10,7 +10,7 @@ const formularioLogin = (req, res) => {
     });
 }
 
-const formularioReistro = (req, res) => {
+const formularioRegistro = (req, res) => {
     res.render('auth/registro', {
         pagina: 'Crear Cuenta',
         csrfToken: req.csrfToken()
@@ -93,7 +93,7 @@ const formularioOlvidePassword = (req, res) => {
 
 export {
     formularioLogin,
-    formularioReistro,
+    formularioRegistro,
     registrarUsuario,
     confirmarCuenta,
     formularioOlvidePassword,
