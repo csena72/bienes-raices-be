@@ -8,6 +8,57 @@ import { emailRegistro, emailOlvidePassword } from '../helpers/emails.js';
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
         pagina: 'Iniciar Sesión',
+        csrfToken: req.csrfToken(),
+    });
+}
+
+const autenticar = async(req, res) => {
+    const { email, password } = req.body;
+
+    await check('email').isEmail().withMessage('El email es obligatorio').run(req);
+    await check('password').not().notEmpty().withMessage('La contraseña es obligatoria.').run(req);
+
+    let resultado = validationResult(req);
+
+    if (!resultado.isEmpty()) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array(),
+            usuario: req.body
+        });
+    }
+
+    const usuario = await Usuario.findOne({ where: { email } });
+
+    if (!usuario) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            csrfToken: req.csrfToken(),
+            errores: [ {msg : 'El usuario no existe'} ]
+        });
+    }
+
+    if (!usuario.confirmado) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            csrfToken: req.csrfToken(),
+            errores: [ {msg : 'Tu cuenta no ha sido confirmada'}]
+        });
+    }
+
+    if (!bcrypt.compareSync(password, usuario.password)) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            csrfToken: req.csrfToken(),
+            errores: [ {msg : 'La contraseña es incorrecta'}]
+        });
+    }
+
+
+
+    return res.render('mis-propiedades', {
+        pagina: 'Mis propiedades',
     });
 }
 
@@ -184,6 +235,7 @@ const nuevoPassword = async(req, res) => {
 
 export {
     formularioLogin,
+    autenticar,
     formularioRegistro,
     registrarUsuario,
     confirmarCuenta,
