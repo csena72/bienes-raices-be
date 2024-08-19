@@ -1,6 +1,6 @@
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
-import { generarId } from '../helpers/tokens.js';
+import { generarId, generarJWT } from '../helpers/tokens.js';
 import Usuario from '../models/Usuario.js';
 import { emailRegistro, emailOlvidePassword } from '../helpers/emails.js';
 
@@ -55,11 +55,12 @@ const autenticar = async(req, res) => {
         });
     }
 
+    const token = generarJWT({ id: usuario.id, nombre: usuario.nombre });
 
-
-    return res.render('mis-propiedades', {
-        pagina: 'Mis propiedades',
-    });
+    return res.cookie('_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+    }).redirect('/mis-propiedades');
 }
 
 const formularioRegistro = (req, res) => {
