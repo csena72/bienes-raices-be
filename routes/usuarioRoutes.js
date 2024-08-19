@@ -1,10 +1,13 @@
 import express from 'express';
 import { 
     formularioLogin,
-    formularioReistro,
+    formularioRegistro,
     registrarUsuario,
     confirmarCuenta,
-    formularioOlvidePassword
+    formularioOlvidePassword,
+    resetearPassword,
+    comprobarToken,
+    nuevoPassword
 } from '../controllers/usuarioController.js';
 
 
@@ -17,6 +20,10 @@ router.get("/registro", formularioRegistro);
 router.post("/registro", registrarUsuario);
 router.get("/confirmar-cuenta/:token", confirmarCuenta);
 router.get("/olvide-password", formularioOlvidePassword);
+router.post("/olvide-password", resetearPassword);
+
+router.get("/olvide-password/:token", comprobarToken);
+router.post("/olvide-password/:token", nuevoPassword);
 
 
 export default router;
